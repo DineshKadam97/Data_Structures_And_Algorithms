@@ -115,8 +115,18 @@ int main(void)
 	aobj.Accept();
 	aobj.Display();
 
-	std::cout << "After Generic Sorting : " << std::endl;
+	std::cout << "After Generic Sorting(int) : " << std::endl;
+	aobj.Generic_Sorting();
+	aobj.Display();
+
+	ArrayX<float> aobj(iSize, subArraySize);
+
+	aobj.Accept();
+	aobj.Display();
+
+	std::cout << "After Generic Sorting(float) : " << std::endl;
 	aobj.Generic_Sorting();
 	aobj.Display();
 	return 0;
 }
+
