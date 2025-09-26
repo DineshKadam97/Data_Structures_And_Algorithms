@@ -1,9 +1,10 @@
 #include<iostream>
 
+template <class T>
 class ArrayX
 {
 public:
-	int* Arr;
+	T* Arr;
 	int iSize;
 	int subArraySize;
 
@@ -12,25 +13,32 @@ public:
 	ArrayX(int iSizeX, int subArraySizeX);
 	~ArrayX();
 
+	void Generic_Sorting();
+
+	void Insert_At_Sorting_Postion(T* Arr, int subArraySize);
+
 	void Accept();
 	void Display();
 };
 
-ArrayX::ArrayX()
+template <class T>
+ArrayX<T>::ArrayX()
 {
 	this->Arr = NULL;
 	this->iSize = 0;
 	this->subArraySize = 0;
 }
 
-ArrayX::ArrayX(int iSizeX, int subArraySizeX)
+template <class T>
+ArrayX<T>::ArrayX(int iSizeX, int subArraySizeX)
 {
 	this->iSize = iSizeX;
 	this->subArraySize = subArraySizeX;
-	this->Arr = new int[iSize];
+	this->Arr = new T[iSize];
 }
 
-ArrayX::~ArrayX()
+template <class T>
+ArrayX<T>::~ArrayX()
 {
 	if (Arr != NULL)
 	{
@@ -38,7 +46,8 @@ ArrayX::~ArrayX()
 	}
 }
 
-ArrayX::Accept()
+template <class T>
+void ArrayX<T>::Accept()
 {
 	std::cout << "Enter the elements : " << std::endl;
 
@@ -51,7 +60,8 @@ ArrayX::Accept()
 	}
 }
 
-ArrayX::Display()
+template <class T>
+void ArrayX<T>::Display()
 {
 	std::cout << "Entered elements are : " << std::endl;
 
@@ -59,9 +69,36 @@ ArrayX::Display()
 
 	while (i < iSize)
 	{
-		std::cout << "arr[" << i <<"]"<< Arr[i] << std::endl;
+		std::cout << "arr[" << i << "] : " << Arr[i] << std::endl;
 		i++;
 	}
+}
+
+template <class T>
+void ArrayX<T>::Generic_Sorting()
+{
+	int subArraySize = 2;
+
+	while (subArraySize <= iSize)
+	{
+		Insert_At_Sorting_Postion(Arr, subArraySize);
+		subArraySize++;
+	}
+}
+
+template <class T>
+void ArrayX<T>::Insert_At_Sorting_Postion(T* Arr, int iSize)
+{
+	int iTemp = Arr[iSize - 1];
+	int i = iSize - 2;
+
+	while (i >= 0 && Arr[i] >= iTemp)
+	{
+		Arr[i + 1] = Arr[i];
+		i = i - 1;
+	}
+
+	Arr[i + 1] = iTemp;
 }
 
 int main(void)
@@ -73,9 +110,13 @@ int main(void)
 
 	int subArraySize = 0;
 
-	ArrayX aobj(iSize, subArraySize);
+	ArrayX<int> aobj(iSize, subArraySize);
 
 	aobj.Accept();
+	aobj.Display();
+
+	std::cout << "After Generic Sorting : " << std::endl;
+	aobj.Generic_Sorting();
 	aobj.Display();
 	return 0;
 }
